@@ -24,6 +24,14 @@ app.get("/department/:id", (req, res) => {
   res.send(department[findD]);
 });
 
+pp.post("/department", (req, res) => {
+  let id = req.params.id;
+  let findD = department.findIndex((e) => e.id == id);
+    if (findD == -1) res.send("ไม่พบข้อมูล");
+    department[findD].name = req.body.name;
+    res.send("แก้ไขข้อมูลสำเร็จ");
+});
+
 app.delete("/department/:id", (req, res) => {
   let id = req.params.id;
   let findD = department.findIndex((e) => e.id == id);
@@ -32,15 +40,7 @@ app.delete("/department/:id", (req, res) => {
     res.send("ลบข้อมูลสำเร็จ");
 });
 
-app.post("/department", (req, res) => {
-  let newDepartment = {
-    id: department.length + 1,
-    name: req.body.name,
-  };
-  department.push(newDepartment);
-  res.send(newDepartment);
-});
-
+a
 app.put("/department/:id", (req, res) => {
   // let newDepartment = {
   //   id: department.length + 1,
