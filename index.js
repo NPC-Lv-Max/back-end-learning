@@ -1,28 +1,55 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const port = 3001; 
+const port = 3001;
 
 app.use(express.json());
 
-let departments = [
-    { id: 1, name: ' IT' },
-    { id: 2, name: 'DB' },
+let department = [
+  { id: 1, name: "IT" },
+  { id: 2, name: "DBT" },
 ];
-app.get('/', (req, res) => {
-    res.send( "My. Dnan Namjun" );
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
-app.get('/departments', (req, res) => {
-    res.send(departments);
+
+app.get("/department", (req, res) => {
+  res.send(department);
 });
-app.post('/departments', (req, res) => {
-    let newDepartment = {
-        id: departments.length + 1,
-        name: req.body.name,
-    };
-    departments.push(newDepartment);
-    res.send(departments);
+
+app.get("/department/:id", (req, res) => {
+  let id = req.params.id;
+  let findD = department.findIndex((e) => e.id == id);
+  if (findD == -1) res.send("ไม่พบข้อมูล");
+  res.send(department[findD]);
+});
+
+app.delete("/department/:id", (req, res) => {
+  let id = req.params.id;
+  let findD = department.findIndex((e) => e.id == id);
+    if (findD == -1) res.send("ไม่พบข้อมูล");
+    department.splice(findD, 1);
+    res.send("ลบข้อมูลสำเร็จ");
+});
+
+app.post("/department", (req, res) => {
+  let newDepartment = {
+    id: department.length + 1,
+    name: req.body.name,
+  };
+  department.push(newDepartment);
+  res.send(newDepartment);
+});
+
+app.put("/department/:id", (req, res) => {
+  // let newDepartment = {
+  //   id: department.length + 1,
+  //   name: req.body.name,
+  // };
+  // department.push(newDepartment);
+  res.send(newDepartment);
 });
 
 app.listen(port, () => {
-    console.log(`Server Started on Port ${port}`);
+  console.log(`Example app listening on port ${port}`);
 });
